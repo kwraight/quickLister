@@ -61,6 +61,8 @@ if "contents" not in st.session_state.keys() or st.button("Check again?"):
 
     st.session_state['file_dict']={}
     for cont in st.session_state['contents']:
+        if cont[0:2]=="._":
+            continue
         if "." not in cont:
             try:
                 st.session_state['file_dict']['no_ext'].append(cont)
