@@ -62,9 +62,6 @@ if "contents" not in st.session_state.keys() or st.button("Check again?"):
 
     st.session_state['file_dict']={}
     for cont in st.session_state['contents']:
-        ### skip backups
-        if cont[0:2]=="._":
-            continue
         if "." not in cont:
             try:
                 st.session_state['file_dict']['no_ext'].append(cont)
@@ -88,5 +85,8 @@ st.write("---")
 sel_key=st.selectbox("Select file type:",st.session_state['file_dict'].keys())
 
 for f in st.session_state['file_dict'][sel_key]:
+    ### skip backups
+    if f[0:2]=="._":
+        continue
     st.write(f)
     DisplayFile(st.session_state['list_dir']+f,sel_key)
