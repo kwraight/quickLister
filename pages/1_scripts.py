@@ -57,10 +57,12 @@ if "contents" not in st.session_state.keys() or st.button("Check again?"):
     if not os.path.isdir(st.session_state['list_dir']):
         st.write("No directory found")
         st.stop()
-    st.session_state['contents']=os.listdir(st.session_state['list_dir'])
+    ### keep (only) files
+    st.session_state['contents']=[f for f in os.listdir(st.session_state['list_dir']) if os.path.isfile(st.session_state['list_dir']+f)]
 
     st.session_state['file_dict']={}
     for cont in st.session_state['contents']:
+        ### skip backups
         if cont[0:2]=="._":
             continue
         if "." not in cont:
