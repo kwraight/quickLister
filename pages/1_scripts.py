@@ -84,5 +84,5 @@ st.write("---")
 sel_key=st.selectbox("Select file type:",st.session_state['file_dict'].keys())
 
 for f in st.session_state['file_dict'][sel_key]:
-    st.write(st.session_state['list_dir']+f)
+    st.write(f)
     DisplayFile(st.session_state['list_dir']+f,sel_key)
