@@ -123,6 +123,6 @@ for f in st.session_state['file_dict'][sel_key]:
     if "/._" in f:
         continue
     ### file name (no path)
-    st.write(f.split['/'][-1])
+    st.write(f.split('/')[-1])
     ## display
     DisplayFile(f,sel_key)
