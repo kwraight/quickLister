@@ -47,13 +47,13 @@ def GetContents(pathStr, dirFlag=False):
     ### just files
     if not dirFlag:
         ### keep (only) files
-        fileList=[pathStr+"/"+f for f in os.listdir(pathStr) if os.path.isfile(pathStr+"/"+f)]
+        fileList=[pathStr+f for f in os.listdir(pathStr) if os.path.isfile(pathStr+f)]
         return fileList
     else:
-        dirList=[pathStr+"/"+f for f in os.listdir(pathStr) if os.path.isdir(pathStr+"/"+f)]
+        dirList=[pathStr+f for f in os.listdir(pathStr) if os.path.isdir(pathStr+f)]
         sel_dir=st.selectbox(f"Select from {pathStr}:",dirList, key="sel_"+pathStr)
         try:
-            return GetContents(sel_dir, st.checkbox("directories?", key="sub_"+pathStr))
+            return GetContents(sel_dir, st.checkbox("Get directories?", key="sub_"+pathStr))
         except TypeError:
             st.write("None Found")
             st.stop()
