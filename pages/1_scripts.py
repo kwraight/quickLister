@@ -48,6 +48,8 @@ def GetContents(pathStr, dirFlag=False):
     if not dirFlag:
         ### keep (only) files
         fileList=[pathStr+f for f in os.listdir(pathStr) if os.path.isfile(pathStr+f)]
+        ### remove back-ups
+        fileList=[f for f in filelist if "/._" not in f]
         return fileList
     else:
         dirList=[pathStr+f for f in os.listdir(pathStr) if os.path.isdir(pathStr+f)]
@@ -89,9 +91,6 @@ if 1==1: #"contents" not in st.session_state.keys() or st.button("Check again?")
 
     st.session_state['file_dict']={}
     for cont in st.session_state['contents']:
-        ### skip back-ups
-        if "/._" in cont:
-            continue
         if "." not in cont:
             try:
                 st.session_state['file_dict']['no_ext'].append(cont)
