@@ -89,6 +89,9 @@ if 1==1: #"contents" not in st.session_state.keys() or st.button("Check again?")
 
     st.session_state['file_dict']={}
     for cont in st.session_state['contents']:
+        ### skip back-ups
+        if "/._" in cont:
+            continue
         if "." not in cont:
             try:
                 st.session_state['file_dict']['no_ext'].append(cont)
@@ -119,9 +122,6 @@ if sel_key not in st.session_state['file_dict'].keys():
     st.write(f"**Sorry can't find {sel_key}. Try something else.**")
 
 for f in st.session_state['file_dict'][sel_key]:
-    ### skip backups
-    if "/._" in f:
-        continue
     ### file name (no path)
     st.write(f.split('/')[-1])
     ## display
