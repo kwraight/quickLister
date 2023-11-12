@@ -49,7 +49,7 @@ def GetContents(pathStr, dirFlag=False):
         ### keep (only) files
         fileList=[pathStr+f for f in os.listdir(pathStr) if os.path.isfile(pathStr+f)]
         ### remove back-ups
-        fileList=[f for f in filelist if "/._" not in f]
+        fileList=[f for f in fileList if "/._" not in f]
         return fileList
     else:
         dirList=[pathStr+f for f in os.listdir(pathStr) if os.path.isdir(pathStr+f)]
