@@ -31,6 +31,32 @@ def DisplayFile(file,ext):
     else:
         st.write("No extension")
 
+def GetContents(pathStr, dirFlag=False):
+
+    if pathStr[-1]!="/":
+        pathStr+="/"
+
+    # st.write("check",pathStr)
+    ### check dir exists
+    if not os.path.isdir(pathStr):
+        st.write("No directory found")
+        st.stop()
+
+    # st.write("all",[pathStr+"/"+f for f in os.listdir(pathStr)])
+
+    ### just files
+    if not dirFlag:
+        ### keep (only) files
+        fileList=[pathStr+"/"+f for f in os.listdir(pathStr) if os.path.isfile(pathStr+"/"+f)]
+        return fileList
+    else:
+        dirList=[pathStr+"/"+f for f in os.listdir(pathStr) if os.path.isdir(pathStr+"/"+f)]
+        sel_dir=st.selectbox(f"Select from {pathStr}:",dirList, key="sel_"+pathStr)
+        try:
+            return GetContents(sel_dir, st.checkbox("directories?", key="sub_"+pathStr))
+        except TypeError:
+            st.write("None Found")
+            st.stop()
 
 ##################
 ### main part
@@ -43,22 +69,23 @@ if "list_dir" not in st.session_state.keys():
 if st.checkbox("Change directory?"):
     st.session_state['list_dir']=st.text_input("Set directory:")
 
-if st.session_state['list_dir'][-1]!="/":
-    st.session_state['list_dir']+="/"
 
 st.write("Using directory path:",st.session_state['list_dir'])
+sel_dir=st.checkbox("Get sub-directories")
+
 
 
 st.write("---")
 
 st.write("## Contents")
 
-if "contents" not in st.session_state.keys() or st.button("Check again?"):
-    if not os.path.isdir(st.session_state['list_dir']):
-        st.write("No directory found")
-        st.stop()
-    ### keep (only) files
-    st.session_state['contents']=[f for f in os.listdir(st.session_state['list_dir']) if os.path.isfile(st.session_state['list_dir']+f)]
+if 1==1: #"contents" not in st.session_state.keys() or st.button("Check again?"):
+    # if not os.path.isdir(st.session_state['list_dir']):
+    #     st.write("No directory found")
+    #     st.stop()
+    # ### keep (only) files
+    # st.session_state['contents']=[f for f in os.listdir(st.session_state['list_dir']) if os.path.isfile(st.session_state['list_dir']+f)]
+    st.session_state['contents']=GetContents(st.session_state['list_dir'], sel_dir)
 
     st.session_state['file_dict']={}
     for cont in st.session_state['contents']:
@@ -89,4 +116,4 @@ for f in st.session_state['file_dict'][sel_key]:
     if f[0:2]=="._":
         continue
     st.write(f)
-    DisplayFile(st.session_state['list_dir']+f,sel_key)
+    DisplayFile(f,sel_key)
