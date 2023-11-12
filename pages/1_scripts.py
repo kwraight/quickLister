@@ -110,17 +110,19 @@ if st.checkbox("See file list?"):
 st.write("---")
 
 if len(st.session_state['file_dict'].keys())<1:
-    st.write("None found. Try someting else.")
+    st.write("### None found. Try someting else - get sub-directories?")
     st.stop()
 
 sel_key=st.selectbox("Select file type:",st.session_state['file_dict'].keys())
 
-if sel_key not in st.session_state['file_dict'][sel_key]:
-    st.write(f"Sorry can't find {sel_key}. Try something else.")
+if sel_key not in st.session_state['file_dict'].keys():
+    st.write(f"**Sorry can't find {sel_key}. Try something else.**")
 
 for f in st.session_state['file_dict'][sel_key]:
     ### skip backups
     if "/._" in f:
         continue
-    st.write(f)
+    ### file name (no path)
+    st.write(f.split['/'][-1])
+    ## display
     DisplayFile(f,sel_key)
